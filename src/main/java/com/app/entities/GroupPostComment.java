@@ -4,15 +4,15 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "post")
-public class Post {
+@Table(name = "group_post_comment")
+public class GroupPostComment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int postId;
+    private int groupPostCommentId;
 
     @Column
-    private int userId;
+    private int groupPostId;
 
     @Column
     private String text;
@@ -20,23 +20,23 @@ public class Post {
     @Column
     private Timestamp timestamp;
 
-    public Post() {
+    public GroupPostComment() {
     }
 
-    public int getPostId() {
-        return postId;
+    public int getGroupPostCommentId() {
+        return groupPostCommentId;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public void setGroupPostCommentId(int groupPostCommentId) {
+        this.groupPostCommentId = groupPostCommentId;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getGroupPostId() {
+        return groupPostId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setGroupPostId(int groupPostId) {
+        this.groupPostId = groupPostId;
     }
 
     public String getText() {
