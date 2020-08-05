@@ -2,6 +2,7 @@ package com.app.services;
 
 import com.app.entities.User;
 import com.app.repositories.UserRepository;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,10 +31,8 @@ public class UserService {
     }
 
     public User logIn(String username, String password, String mail) {
-        User loggedIn = userRepository.findByMailAndPassword(mail, password);
-        if (loggedIn == null) {
-            loggedIn = userRepository.findByUsernameAndPassword(username, password);
-        }
-        return loggedIn;
+        return userRepository.findByUsernameOrMailAndPassword(username,mail, password).orElseThrow(() ->
+                new UsernameNotFoundException("User not found with username or email : " + username+" "+mail));
+
     }
 }

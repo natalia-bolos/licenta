@@ -1,6 +1,8 @@
 package com.app.entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -25,8 +27,24 @@ public class User {
     @Column(name = "phone_nr")
     private String phoneNumber;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "platform_membership",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+
     public User() {
     }
+
+    public User(String name, String mail, String username, String password, String phoneNr) {
+        this.name = name;
+        this.mail = mail;
+        this.username = username;
+        this.password = password;
+        this.phoneNumber=phoneNr;
+    }
+
+
 
     public int getUserId() {
         return userId;
@@ -74,5 +92,13 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

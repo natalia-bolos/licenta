@@ -1,15 +1,12 @@
 package com.app.controllers;
 
-import com.app.dto.PostWithComments;
 import com.app.entities.Post;
 import com.app.services.PostAttachmentService;
 import com.app.services.PostService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 
 @RestController
 @RequestMapping(consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

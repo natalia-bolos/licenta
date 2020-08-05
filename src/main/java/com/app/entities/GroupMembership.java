@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="membership")
-public class Membership {
+@Table(name="group_membership")
+public class GroupMembership {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int membershipId;
@@ -13,16 +13,16 @@ public class Membership {
     @Column
     private int groupId;
 
-    @Column
+    @Column(name="user_id")
     private int userId;
 
-    @Column
-    private int role_id;
+    @Column(name="role_id")
+    private int roleId;
 
     @Column
     private Timestamp timestamp;
 
-    public Membership() {
+    public GroupMembership() {
     }
 
     public int getMembershipId() {
@@ -49,12 +49,12 @@ public class Membership {
         this.userId = userId;
     }
 
-    public int getRole_id() {
-        return role_id;
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setRole_id(int role_id) {
-        this.role_id = role_id;
+    public void setRoleId(int role_id) {
+        this.roleId = role_id;
     }
 
     public Timestamp getTimestamp() {

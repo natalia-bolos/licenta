@@ -3,6 +3,7 @@ package com.app.dto;
 import com.app.entities.Comment;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 public class PostWithComments {
@@ -13,14 +14,14 @@ public class PostWithComments {
 
     private String text;
 
-    private Timestamp timestamp;
+    private Date timestamp;
 
     private List<Comment> comments;
 
     public PostWithComments() {
     }
 
-    public PostWithComments(int postId, int userId, String text, Timestamp timestamp, List<Comment> comments) {
+    public PostWithComments(int postId, int userId, String text, Date timestamp, List<Comment> comments) {
         this.postId = postId;
         this.userId = userId;
         this.text = text;
@@ -52,11 +53,11 @@ public class PostWithComments {
         this.text = text;
     }
 
-    public Timestamp getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 

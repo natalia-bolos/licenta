@@ -6,6 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
+
 
 @RestController
 @RequestMapping(consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -18,25 +20,14 @@ public class UserController {
     }
 
     @GetMapping("/users")
+    @RolesAllowed("ROLE_ADMIN")
     public ResponseEntity getAllUsers(){
         return ResponseEntity.ok().body(userService.getAllUsers());
     }
 
     @GetMapping("/users/{id}")
+    @RolesAllowed("ROLE_ADMIN")
     public ResponseEntity getUserById(@PathVariable Integer id){
        return ResponseEntity.ok().body(userService.getUserById(id).get());
     }
-
-    @PostMapping("/users/register")
-    public ResponseEntity registerUser(@RequestBody User user){
-        return ResponseEntity.ok().body(userService.save(user));
-    }
-
-    @PostMapping("/users/login")
-    public ResponseEntity logInUser(@RequestBody User user){
-            return ResponseEntity.ok().body(userService.logIn(user.getUsername(),user.getPassword(),user.getMail()));
-
-    }
-
-
 }

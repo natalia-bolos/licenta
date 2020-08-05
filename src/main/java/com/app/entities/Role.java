@@ -1,5 +1,7 @@
 package com.app.entities;
 
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,8 +11,10 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int roleId;
 
-    @Column
-    private String name;
+    @Enumerated(EnumType.STRING)
+    @NaturalId
+    @Column(length = 60)
+    private RoleName name;
 
     public Role() {
     }
@@ -23,11 +27,11 @@ public class Role {
         this.roleId = roleId;
     }
 
-    public String getRole() {
+    public RoleName getName() {
         return name;
     }
 
-    public void setRole(String role) {
+    public void setName(RoleName name) {
         this.name = name;
     }
 }
