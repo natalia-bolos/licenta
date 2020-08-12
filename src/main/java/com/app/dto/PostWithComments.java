@@ -2,7 +2,6 @@ package com.app.dto;
 
 import com.app.entities.Comment;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 

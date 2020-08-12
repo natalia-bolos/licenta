@@ -1,32 +1,12 @@
-package com.app.entities;
+package com.app.dto;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name="study_group")
-public class Group {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int groupId;
-
-    @Column(name="name")
+public class CreateGroupObject {
     private String name;
-
-    @Column(name="type")
     private String type;
-
-    @Column(name="description")
     private String description;
+    private int creatorId;
 
-    public Group() {
-    }
-
-    public int getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
+    public CreateGroupObject() {
     }
 
     public String getName() {
@@ -51,5 +31,13 @@ public class Group {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(int creatorId) {
+        this.creatorId = creatorId;
     }
 }

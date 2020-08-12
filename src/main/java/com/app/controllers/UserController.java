@@ -25,6 +25,7 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getAllUsers());
     }
 
+
     @GetMapping("/users/{id}")
     @RolesAllowed("ROLE_ADMIN")
     public ResponseEntity getUserById(@PathVariable Integer id){

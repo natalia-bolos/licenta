@@ -24,8 +24,8 @@ public class PostAttachmentController {
     }
 
     @PostMapping("/uploadFile/post/{id}")
-    public void uploadAttachment(@RequestParam("file") MultipartFile file, @PathVariable Integer id) {
-        PostAttachment stored = postAttachmentService.storeFile(file, id);
+    public ResponseEntity uploadAttachment(@RequestParam("file") MultipartFile file, @PathVariable Integer id) {
+        return ResponseEntity.ok().body(postAttachmentService.storeFile(file, id));
     }
 
     @PostMapping("/uploadMultipleFiles/post/{id}")

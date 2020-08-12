@@ -14,6 +14,10 @@ import com.app.repositories.PlatformMembershipRepository;
 import com.app.repositories.RoleRepository;
 import com.app.repositories.UserRepository;
 import com.app.security.JwtTokenProvider;
+import com.app.security.UserPrincipal;
+import com.app.services.PostAttachmentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,6 +58,8 @@ public class AuthController {
     @Autowired
     JwtTokenProvider tokenProvider;
 
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -65,9 +71,9 @@ public class AuthController {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
+        System.out.println(((UserPrincipal)authentication.getPrincipal()).getId());
         String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt,((UserPrincipal)authentication.getPrincipal()).getId()));
     }
 
     @PostMapping("/signup")

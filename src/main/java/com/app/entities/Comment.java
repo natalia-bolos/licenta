@@ -2,6 +2,7 @@ package com.app.entities;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table(name = "comments")
@@ -22,7 +23,7 @@ public class Comment {
     private String text;
 
     @Column
-    private Timestamp timestamp;
+    private Date timestamp = new Date();
 
     public Comment() {
     }
@@ -59,11 +60,11 @@ public class Comment {
         this.text = text;
     }
 
-    public Timestamp getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 }
