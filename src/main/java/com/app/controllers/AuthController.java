@@ -15,7 +15,6 @@ import com.app.repositories.RoleRepository;
 import com.app.repositories.UserRepository;
 import com.app.security.JwtTokenProvider;
 import com.app.security.UserPrincipal;
-import com.app.services.PostAttachmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +70,7 @@ public class AuthController {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        System.out.println(((UserPrincipal)authentication.getPrincipal()).getId());
+        
         String jwt = tokenProvider.generateToken(authentication);
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwt,((UserPrincipal)authentication.getPrincipal()).getId()));
     }

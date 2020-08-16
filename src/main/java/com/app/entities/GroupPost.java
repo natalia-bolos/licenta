@@ -9,6 +9,7 @@ public class GroupPost {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="group_post_id")
     private int groupPostId;
 
     @Column

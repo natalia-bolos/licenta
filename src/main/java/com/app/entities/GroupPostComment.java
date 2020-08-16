@@ -11,8 +11,11 @@ public class GroupPostComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int groupPostCommentId;
 
-    @Column
+    @Column(name="group_post_id")
     private int groupPostId;
+
+    @Column(name="user_id")
+    private int userId;
 
     @Column
     private String text;
@@ -53,5 +56,13 @@ public class GroupPostComment {
 
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

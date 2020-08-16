@@ -34,6 +34,11 @@ public class PostController {
         return  ResponseEntity.ok().body(postService.getAllPostsByUserId(id));
     }
 
+    @GetMapping("/posts/group/{id}")
+    public ResponseEntity getAllPostsByGroupId(@PathVariable Integer id){
+        return  ResponseEntity.ok().body(postService.getAllPostWithCommentsByGroupId(id));
+    }
+
 
     @PostMapping("/posts")
     public ResponseEntity addPostWithoutAttachment(@RequestBody Post post){
