@@ -26,4 +26,9 @@ public class GroupController {
         return ResponseEntity.ok().body(groupService.getGroupsByUserId(id));
     }
 
+    @GetMapping("/group/members/{id}")
+    public ResponseEntity getGroupMembers(@PathVariable int id){
+        return ResponseEntity.ok().body(groupService.getMembersOfGroupByGroupId(id));
+    }
+
 }
