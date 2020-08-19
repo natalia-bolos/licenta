@@ -25,6 +25,8 @@ public class Comment {
     @Column
     private Date timestamp = new Date();
 
+    private String username;
+
     public Comment() {
     }
 
@@ -66,5 +68,13 @@ public class Comment {
 
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

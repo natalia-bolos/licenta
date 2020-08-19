@@ -2,10 +2,7 @@ package com.app.services;
 
 import com.app.dto.GroupPostWithComments;
 import com.app.dto.PostWithComments;
-import com.app.entities.GroupPost;
-import com.app.entities.GroupPostComment;
-import com.app.entities.Post;
-import com.app.entities.User;
+import com.app.entities.*;
 import com.app.repositories.*;
 import org.springframework.stereotype.Service;
 
@@ -37,9 +34,6 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public List<Post> getAllPostsByUserId(Integer id) {
-        return postRepository.findByUserId(id);
-    }
 
     public List<GroupPostWithComments> getAllPostWithCommentsByGroupId(Integer id) {
         List<GroupPost> postsByGroupId = groupPostRepository.findAllByGroupId(id);
@@ -61,11 +55,20 @@ public class PostService {
     }
 
     public List<PostWithComments> getAllPostsWithCommentsByUserId(Integer id) {
-        List<Post> postsByUserId = postRepository.findByUserId(id);
+        List<Post> postsByUserId = postRepository.findByUserIdOrderByTimestampDesc(id);
         List<PostWithComments> postsWithComments = new ArrayList<>();
         for (Post post : postsByUserId) {
-
-            postsWithComments.add(new PostWithComments(post.getPostId(), post.getUserId(), post.getText(), post.getTimestamp(), commentRepository.findAllByPostId(post.getPostId())));
+            List<Comment> comments = commentRepository.findAllByPostId(post.getPostId());
+            for (Comment comment : comments) {
+                User user = userRepository.findById(comment.getUserId()).orElse(null);
+                if (user != null) {
+                    comment.setUsername(user.getUsername());
+                }
+            }
+            User user = userRepository.findById(post.getUserId()).orElse(null);
+            if (user != null) {
+                postsWithComments.add(new PostWithComments(post.getPostId(), post.getUserId(), user.getUsername(), post.getText(), post.getTimestamp(), comments));
+            }
         }
         return postsWithComments;
     }

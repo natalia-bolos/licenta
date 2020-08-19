@@ -24,14 +24,11 @@ public class PostController {
         return ResponseEntity.ok().body(postService.getAllPosts());
     }
 
-    @GetMapping("/posts/comments/{id}")
-    public ResponseEntity getAllPostsWithComments(@PathVariable Integer id){
-        return ResponseEntity.ok().body(postService.getAllPostsWithCommentsByUserId(id));
-    }
+
 
     @GetMapping("/posts/user/{id}")
-    public ResponseEntity getAllPostsByUserId(@PathVariable Integer id){
-        return  ResponseEntity.ok().body(postService.getAllPostsByUserId(id));
+    public ResponseEntity getAllPostsWithComments(@PathVariable Integer id){
+        return ResponseEntity.ok().body(postService.getAllPostsWithCommentsByUserId(id));
     }
 
     @GetMapping("/posts/group/{id}")

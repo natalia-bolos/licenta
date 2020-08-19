@@ -11,6 +11,8 @@ public class PostWithComments {
 
     private int userId;
 
+    private String username;
+
     private String text;
 
     private Date timestamp;
@@ -23,6 +25,15 @@ public class PostWithComments {
     public PostWithComments(int postId, int userId, String text, Date timestamp, List<Comment> comments) {
         this.postId = postId;
         this.userId = userId;
+        this.text = text;
+        this.timestamp = timestamp;
+        this.comments = comments;
+    }
+
+    public PostWithComments(int postId, int userId, String username, String text, Date timestamp, List<Comment> comments) {
+        this.postId = postId;
+        this.userId = userId;
+        this.username = username;
         this.text = text;
         this.timestamp = timestamp;
         this.comments = comments;
@@ -42,6 +53,14 @@ public class PostWithComments {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getText() {
