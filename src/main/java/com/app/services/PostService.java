@@ -5,10 +5,8 @@ import com.app.dto.PostWithComments;
 import com.app.entities.GroupPost;
 import com.app.entities.GroupPostComment;
 import com.app.entities.Post;
-import com.app.repositories.CommentRepository;
-import com.app.repositories.GroupPostCommentRepository;
-import com.app.repositories.GroupPostRepository;
-import com.app.repositories.PostRepository;
+import com.app.entities.User;
+import com.app.repositories.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,11 +23,14 @@ public class PostService {
 
     private final GroupPostCommentRepository groupPostCommentRepository;
 
-    public PostService(PostRepository postRepository, CommentRepository commentRepository, GroupPostRepository groupPostRepository, GroupPostCommentRepository groupPostCommentRepository) {
+    private final UserRepository userRepository;
+
+    public PostService(PostRepository postRepository, CommentRepository commentRepository, GroupPostRepository groupPostRepository, GroupPostCommentRepository groupPostCommentRepository, UserRepository userRepository) {
         this.postRepository = postRepository;
         this.commentRepository = commentRepository;
         this.groupPostRepository = groupPostRepository;
         this.groupPostCommentRepository = groupPostCommentRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Post> getAllPosts() {
@@ -45,7 +46,16 @@ public class PostService {
         List<GroupPostWithComments> postsWithComments = new ArrayList<>();
         for (GroupPost post : postsByGroupId) {
             List<GroupPostComment> comments = groupPostCommentRepository.findAllByGroupPostId(post.getGroupPostId());
-            postsWithComments.add(new GroupPostWithComments(post.getGroupPostId(),post.getUserId(),post.getText(),post.getTimestamp(),comments));
+            for (GroupPostComment comment : comments) {
+                User user = userRepository.findById(comment.getUserId()).orElse(null);
+                if (user != null) {
+                    comment.setUsername(user.getUsername());
+                }
+            }
+            User user = userRepository.findById(post.getUserId()).orElse(null);
+            if (user != null) {
+                postsWithComments.add(new GroupPostWithComments(post.getGroupPostId(), post.getUserId(), user.getUsername(), post.getText(), post.getTimestamp(), comments));
+            }
         }
         return postsWithComments;
     }

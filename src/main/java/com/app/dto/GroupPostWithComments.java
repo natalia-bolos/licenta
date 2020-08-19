@@ -11,18 +11,14 @@ public class GroupPostWithComments {
 
     private int userId;
 
+    private String username;
+
     private String text;
 
     private Date timestamp;
 
     private List<GroupPostComment> comments;
 
-    public GroupPostWithComments(int userId, String text, Date timestamp, List<GroupPostComment> comments) {
-        this.userId = userId;
-        this.text = text;
-        this.timestamp = timestamp;
-        this.comments = comments;
-    }
 
     public GroupPostWithComments(int postId, int userId, String text, Date timestamp, List<GroupPostComment> comments) {
         this.postId = postId;
@@ -30,6 +26,23 @@ public class GroupPostWithComments {
         this.text = text;
         this.timestamp = timestamp;
         this.comments = comments;
+    }
+
+    public GroupPostWithComments(int postId, int userId, String username, String text, Date timestamp, List<GroupPostComment> comments) {
+        this.postId = postId;
+        this.userId = userId;
+        this.username = username;
+        this.text = text;
+        this.timestamp = timestamp;
+        this.comments = comments;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getPostId() {
