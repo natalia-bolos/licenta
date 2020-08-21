@@ -6,7 +6,9 @@ import com.app.entities.*;
 import com.app.repositories.*;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -76,4 +78,10 @@ public class PostService {
     public Post savePost(Post post) {
         return postRepository.save(post);
     }
+
+    public GroupPost addPostsToGroupId(GroupPost post){
+        post.setTimestamp( new Timestamp(System.currentTimeMillis()));
+       return groupPostRepository.save(post);
+    }
+
 }

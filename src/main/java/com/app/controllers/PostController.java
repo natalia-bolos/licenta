@@ -1,5 +1,6 @@
 package com.app.controllers;
 
+import com.app.entities.GroupPost;
 import com.app.entities.Post;
 import com.app.services.PostAttachmentService;
 import com.app.services.PostService;
@@ -36,6 +37,10 @@ public class PostController {
         return  ResponseEntity.ok().body(postService.getAllPostWithCommentsByGroupId(id));
     }
 
+    @PostMapping("/posts/group")
+    public ResponseEntity addPostsToGroupId(@RequestBody GroupPost post){
+        return  ResponseEntity.ok().body(postService.addPostsToGroupId(post));
+    }
 
     @PostMapping("/posts")
     public ResponseEntity addPostWithoutAttachment(@RequestBody Post post){
