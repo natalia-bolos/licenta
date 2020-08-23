@@ -15,6 +15,7 @@ import com.app.repositories.RoleRepository;
 import com.app.repositories.UserRepository;
 import com.app.security.JwtTokenProvider;
 import com.app.security.UserPrincipal;
+import com.app.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,9 @@ public class AuthController {
     @Autowired
     JwtTokenProvider tokenProvider;
 
+    @Autowired
+    UserService userService;
+
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @PostMapping("/signin")
@@ -82,8 +86,8 @@ public class AuthController {
                     HttpStatus.BAD_REQUEST);
         }
 
-        if (userRepository.existsByMail(signUpRequest.getMail())) {
-            return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"),
+        if (userRepository.existsByMail(signUpRequest.getMail())||!userService.testMail(signUpRequest.getMail())) {
+            return new ResponseEntity(new ApiResponse(false, "Email Address already in use or is invalid!"),
                     HttpStatus.BAD_REQUEST);
         }
 
