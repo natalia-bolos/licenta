@@ -75,4 +75,21 @@ public class GroupService {
         return members;
     }
 
+    public List<Group> getAllPublicGroups(){
+        return groupRepository.findAllByType("public");
+    }
+
+    public List<Group> getAllNameLike(String name){
+        return groupRepository.findByNameLike("%"+name+"%");
+    }
+
+    public GroupMembership createGroupMembership(GroupMembership groupMembership){
+        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+                .orElseThrow(() -> new AppException("User Role not set."));
+        groupMembership.setRoleId(userRole.getRoleId());
+        groupMembership.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        return groupMembershipRepository.save(groupMembership);
+    }
+
+
 }

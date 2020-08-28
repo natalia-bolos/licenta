@@ -10,7 +10,7 @@ public class GroupMembership {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int membershipId;
 
-    @Column
+    @Column(name="group_id")
     private int groupId;
 
     @Column(name="user_id")

@@ -1,6 +1,7 @@
 package com.app.controllers;
 
 import com.app.dto.CreateGroupObject;
+import com.app.entities.GroupMembership;
 import com.app.services.GroupService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,11 @@ public class GroupController {
         return ResponseEntity.ok().body(groupService.createGroup(createGroupObject));
     }
 
+    @PostMapping("/group/join")
+    public ResponseEntity createJoin(@RequestBody GroupMembership groupMembership){
+        return ResponseEntity.ok().body(groupService.createGroupMembership(groupMembership));
+    }
+
     @GetMapping("/group/{id}")
     public ResponseEntity getGroupsByUserId(@PathVariable int id){
         return ResponseEntity.ok().body(groupService.getGroupsByUserId(id));
@@ -29,6 +35,16 @@ public class GroupController {
     @GetMapping("/group/members/{id}")
     public ResponseEntity getGroupMembers(@PathVariable int id){
         return ResponseEntity.ok().body(groupService.getMembersOfGroupByGroupId(id));
+    }
+
+    @GetMapping("/group")
+    public ResponseEntity getAllPublicGroups(){
+        return ResponseEntity.ok().body(groupService.getAllPublicGroups());
+    }
+
+    @GetMapping("/group/name/{name}")
+    public ResponseEntity getAllNameLike(@PathVariable String name){
+        return ResponseEntity.ok().body(groupService.getAllNameLike(name));
     }
 
 }
