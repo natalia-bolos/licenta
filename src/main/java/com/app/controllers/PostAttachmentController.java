@@ -56,6 +56,8 @@ public class PostAttachmentController {
                 .body(new ByteArrayResource(dbFile.getFile()));
     }
 
+
+
     @GetMapping("/downloadFile/group/{fileId}")
     public ResponseEntity<Resource> downloadGroupFile(@PathVariable Integer fileId) {
 
@@ -63,7 +65,8 @@ public class PostAttachmentController {
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(dbFile.getType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + dbFile.getName() + "\"")
+                .contentLength(dbFile.getFile().length)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + dbFile.getName())
                 .body(new ByteArrayResource(dbFile.getFile()));
     }
 
