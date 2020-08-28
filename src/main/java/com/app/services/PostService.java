@@ -23,12 +23,15 @@ public class PostService {
 
     private final UserRepository userRepository;
 
-    public PostService(PostRepository postRepository, CommentRepository commentRepository, GroupPostRepository groupPostRepository, GroupPostCommentRepository groupPostCommentRepository, UserRepository userRepository) {
+    private final GroupPostAttachmentRepository groupPostAttachmentRepository;
+
+    public PostService(PostRepository postRepository, CommentRepository commentRepository, GroupPostRepository groupPostRepository, GroupPostCommentRepository groupPostCommentRepository, UserRepository userRepository, GroupPostAttachmentRepository groupPostAttachmentRepository) {
         this.postRepository = postRepository;
         this.commentRepository = commentRepository;
         this.groupPostRepository = groupPostRepository;
         this.groupPostCommentRepository = groupPostCommentRepository;
         this.userRepository = userRepository;
+        this.groupPostAttachmentRepository = groupPostAttachmentRepository;
     }
 
     public List<Post> getAllPosts() {
@@ -48,8 +51,9 @@ public class PostService {
                 }
             }
             User user = userRepository.findById(post.getUserId()).orElse(null);
+            List<GroupPostAttachment> attachments=groupPostAttachmentRepository.findByPostId(post.getGroupPostId());
             if (user != null) {
-                postsWithComments.add(new GroupPostWithComments(post.getGroupPostId(), post.getUserId(), user.getUsername(), post.getText(), post.getTimestamp(), comments));
+                postsWithComments.add(new GroupPostWithComments(post.getGroupPostId(), post.getUserId(), user.getUsername(), post.getText(), post.getTimestamp(), comments,attachments));
             }
         }
         return postsWithComments;

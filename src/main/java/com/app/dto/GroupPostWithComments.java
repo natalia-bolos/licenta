@@ -1,6 +1,7 @@
 package com.app.dto;
 
 
+import com.app.entities.GroupPostAttachment;
 import com.app.entities.GroupPostComment;
 
 import java.util.Date;
@@ -19,22 +20,17 @@ public class GroupPostWithComments {
 
     private List<GroupPostComment> comments;
 
+    private List<GroupPostAttachment> attachments;
 
-    public GroupPostWithComments(int postId, int userId, String text, Date timestamp, List<GroupPostComment> comments) {
-        this.postId = postId;
-        this.userId = userId;
-        this.text = text;
-        this.timestamp = timestamp;
-        this.comments = comments;
-    }
 
-    public GroupPostWithComments(int postId, int userId, String username, String text, Date timestamp, List<GroupPostComment> comments) {
+    public GroupPostWithComments(int postId, int userId, String username, String text, Date timestamp, List<GroupPostComment> comments, List<GroupPostAttachment> attachments) {
         this.postId = postId;
         this.userId = userId;
         this.username = username;
         this.text = text;
         this.timestamp = timestamp;
         this.comments = comments;
+        this.attachments = attachments;
     }
 
     public String getUsername() {
@@ -83,5 +79,13 @@ public class GroupPostWithComments {
 
     public void setComments(List<GroupPostComment> comments) {
         this.comments = comments;
+    }
+
+    public List<GroupPostAttachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<GroupPostAttachment> attachments) {
+        this.attachments = attachments;
     }
 }
