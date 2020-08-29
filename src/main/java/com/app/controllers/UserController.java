@@ -1,6 +1,7 @@
 package com.app.controllers;
 
 import com.app.dto.CompleteMoreUserInfo;
+import com.app.entities.GroupMembership;
 import com.app.entities.User;
 import com.app.services.MoreUserInformationService;
 import com.app.services.UserService;
@@ -41,8 +42,18 @@ public class UserController {
         return ResponseEntity.ok().body(moreUserInformationService.getMoreUserInfoByUserId(id));
     }
 
+    @GetMapping("/user/name/{name}")
+    public ResponseEntity getAllNameLike(@PathVariable String name){
+        return ResponseEntity.ok().body(userService.getAllUsersNameLike(name));
+    }
+
     @PostMapping("/user/more/{id}")
     public ResponseEntity saveMoreInfo(@RequestBody CompleteMoreUserInfo completeMoreUserInfo,@PathVariable Integer id){
         return ResponseEntity.ok().body(moreUserInformationService.saveUserInfo(completeMoreUserInfo,id));
+    }
+
+    @PostMapping("/user/add")
+    public ResponseEntity saveAddUser(@RequestBody GroupMembership groupMembership){
+        return ResponseEntity.ok().body(userService.addUserToGroup(groupMembership));
     }
 }
