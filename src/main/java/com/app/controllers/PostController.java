@@ -1,7 +1,9 @@
 package com.app.controllers;
 
+import com.app.dto.ConversationRequest;
 import com.app.entities.GroupPost;
 import com.app.entities.Post;
+import com.app.services.MessageService;
 import com.app.services.PostAttachmentService;
 import com.app.services.PostService;
 import org.springframework.http.MediaType;
@@ -15,9 +17,12 @@ public class PostController {
 
     private final PostService postService;
     private final PostAttachmentService postAttachmentService;
-    public PostController(PostService postService, PostAttachmentService postAttachmentService) {
+    private final MessageService messageService;
+
+    public PostController(PostService postService, PostAttachmentService postAttachmentService, MessageService messageService) {
         this.postService = postService;
         this.postAttachmentService = postAttachmentService;
+        this.messageService = messageService;
     }
 
     @GetMapping("/posts")
@@ -35,6 +40,11 @@ public class PostController {
     @GetMapping("/posts/group/{id}")
     public ResponseEntity getAllPostsByGroupId(@PathVariable Integer id){
         return  ResponseEntity.ok().body(postService.getAllPostWithCommentsByGroupId(id));
+    }
+
+    @PostMapping("/conversation")
+    public ResponseEntity getConversation(@RequestBody ConversationRequest conversationRequest) {
+        return  ResponseEntity.ok().body(messageService.getConversation(conversationRequest));
     }
 
     @PostMapping("/posts/group")
