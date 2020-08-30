@@ -27,6 +27,11 @@ public class GroupController {
         return ResponseEntity.ok().body(groupService.createGroupMembership(groupMembership));
     }
 
+    @PostMapping("group/membership")
+    public ResponseEntity updateMembershipRole(@RequestBody GroupMembership groupMembership){
+        return  ResponseEntity.ok().body(groupService.updateGroupMembershipRole(groupMembership));
+    }
+
     @GetMapping("/group/{id}")
     public ResponseEntity getGroupsByUserId(@PathVariable int id){
         return ResponseEntity.ok().body(groupService.getGroupsByUserId(id));

@@ -91,5 +91,12 @@ public class GroupService {
         return groupMembershipRepository.save(groupMembership);
     }
 
+    public GroupMembership updateGroupMembershipRole(GroupMembership groupMembership){
+        GroupMembership currentGroupMembership= groupMembershipRepository.findByUserIdAndGroupId(groupMembership.getUserId(),groupMembership.getGroupId());
+        currentGroupMembership.setRoleId(groupMembership.getRoleId());
+        currentGroupMembership.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        return groupMembershipRepository.save(currentGroupMembership);
+    }
+
 
 }
