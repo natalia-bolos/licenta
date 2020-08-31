@@ -1,7 +1,5 @@
 package com.app.dto;
 
-import com.app.entities.Comment;
-
 import java.util.Date;
 import java.util.List;
 
@@ -17,26 +15,23 @@ public class PostWithComments {
 
     private Date timestamp;
 
-    private List<Comment> comments;
 
     public PostWithComments() {
     }
 
-    public PostWithComments(int postId, int userId, String text, Date timestamp, List<Comment> comments) {
+    public PostWithComments(int postId, int userId, String text, Date timestamp) {
         this.postId = postId;
         this.userId = userId;
         this.text = text;
         this.timestamp = timestamp;
-        this.comments = comments;
     }
 
-    public PostWithComments(int postId, int userId, String username, String text, Date timestamp, List<Comment> comments) {
+    public PostWithComments(int postId, int userId, String username, String text, Date timestamp) {
         this.postId = postId;
         this.userId = userId;
         this.username = username;
         this.text = text;
         this.timestamp = timestamp;
-        this.comments = comments;
     }
 
     public int getPostId() {
@@ -79,11 +74,4 @@ public class PostWithComments {
         this.timestamp = timestamp;
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
 }

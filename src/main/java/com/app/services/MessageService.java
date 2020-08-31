@@ -8,6 +8,7 @@ import com.app.repositories.MessageRepository;
 import com.app.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -42,5 +43,13 @@ public class MessageService {
             toReturnMessages.add(new MessageDto(message,sender.getUsername(),receiver.getUsername()));
         }
         return toReturnMessages ;
+    }
+
+    public MessageDto saveMessage(Message sentMessage){
+        sentMessage.setSentTimestamp(new Timestamp(System.currentTimeMillis()));
+        Message saved=messageRepository.save(sentMessage);
+        User sender=userRepository.findById(saved.getSenderId()).orElse(null);
+        User receiver=userRepository.findById(saved.getReceiverId()).orElse(null);
+        return new MessageDto(saved,sender.getUsername(),receiver.getUsername());
     }
 }

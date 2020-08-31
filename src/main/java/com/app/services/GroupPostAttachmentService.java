@@ -1,7 +1,6 @@
 package com.app.services;
 
 import com.app.entities.GroupPostAttachment;
-import com.app.entities.PostAttachment;
 import com.app.repositories.GroupPostAttachmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
