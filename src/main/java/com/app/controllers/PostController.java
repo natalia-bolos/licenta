@@ -2,6 +2,7 @@ package com.app.controllers;
 
 import com.app.dto.ConversationRequest;
 import com.app.entities.GroupPost;
+import com.app.entities.Message;
 import com.app.services.MessageService;
 import com.app.services.PostService;
 import org.springframework.http.MediaType;
@@ -30,6 +31,11 @@ public class PostController {
     @PostMapping("/conversation")
     public ResponseEntity getConversation(@RequestBody ConversationRequest conversationRequest) {
         return  ResponseEntity.ok().body(messageService.getConversation(conversationRequest));
+    }
+
+    @PostMapping("/conversation/new")
+    public ResponseEntity addConversation(@RequestBody Message message) {
+        return  ResponseEntity.ok().body(messageService.saveMessage(message));
     }
 
     @PostMapping("/posts/group")
