@@ -15,6 +15,7 @@ import com.app.repositories.RoleRepository;
 import com.app.repositories.UserRepository;
 import com.app.security.JwtTokenProvider;
 import com.app.security.UserPrincipal;
+import com.app.services.EmailSendingService;
 import com.app.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,6 +62,9 @@ public class AuthController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    EmailSendingService emailSendingService;
+
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @PostMapping("/signin")
@@ -74,9 +78,9 @@ public class AuthController {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        
+
         String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt,((UserPrincipal)authentication.getPrincipal()).getId(),((UserPrincipal)authentication.getPrincipal()).getName()));
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, ((UserPrincipal) authentication.getPrincipal()).getId(), ((UserPrincipal) authentication.getPrincipal()).getName()));
     }
 
     @PostMapping("/signup")
@@ -86,13 +90,13 @@ public class AuthController {
                     HttpStatus.BAD_REQUEST);
         }
 
-        if (userRepository.existsByMail(signUpRequest.getMail())||!userService.testMail(signUpRequest.getMail())) {
+        if (userRepository.existsByMail(signUpRequest.getMail()) || !userService.testMail(signUpRequest.getMail())) {
             return new ResponseEntity(new ApiResponse(false, "Email Address already in use or is invalid!"),
                     HttpStatus.BAD_REQUEST);
         }
 
         User user = new User(signUpRequest.getName(),
-                signUpRequest.getMail(), signUpRequest.getUsername(), signUpRequest.getPassword(),signUpRequest.getPhoneNumber());
+                signUpRequest.getMail(), signUpRequest.getUsername(), signUpRequest.getPassword(), signUpRequest.getPhoneNumber());
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -107,7 +111,7 @@ public class AuthController {
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/users/{username}")
                 .buildAndExpand(result.getUsername()).toUri();
-
+        emailSendingService.sendMail(result.getMail());
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
     }
 }
