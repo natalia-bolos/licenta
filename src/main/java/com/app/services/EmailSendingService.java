@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.io.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -30,8 +31,17 @@ public class EmailSendingService {
         MimeMessage message = emailSender.createMimeMessage();
         try {
             MimeMessageHelper messageHelper = new MimeMessageHelper(message);
-            messageHelper.setText("Welcome to Study Buddy. You will find here a community ready to help you. ");
-            messageHelper.setSubject("Welcome to Study Buddy");
+            FileInputStream inputStream = new FileInputStream(new File(
+                    "src\\main\\resources\\mail_template.html"));
+            InputStreamReader isReader = new InputStreamReader(inputStream);
+            BufferedReader reader = new BufferedReader(isReader);
+            StringBuffer sb = new StringBuffer();
+            String str;
+            while((str = reader.readLine())!= null){
+                sb.append(str);
+            }
+            messageHelper.setText(sb.toString(),true);
+            messageHelper.setSubject("Study Buddy");
             messageHelper.setTo(receiver);
             quickService.submit(new Runnable() {
                 @Override
@@ -43,7 +53,7 @@ public class EmailSendingService {
                     }
                 }
             });
-        } catch (MessagingException e) {
+        } catch (MessagingException | IOException e) {
             LOGGER.error("Error occurred during email sending", e);
 
         }
